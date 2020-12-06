@@ -1,33 +1,89 @@
-# Webpack Frontend Starterkit
+## Problem
 
-[![Dependabot badge](https://flat.badgen.net/dependabot/wbkd/webpack-starter?icon=dependabot)](https://dependabot.com/)
+PayPal Smart Buttons do not come with an amount component.
 
-A lightweight foundation for your next webpack based frontend project.
+If you want to display a very simple amount component so that user can enter the amount, then use this component.
 
-### Installation
+# PP Amount
+
+This is a simple Custom Amount component for PayPal Smart Buttons.
+
+### Usage
+
+1. Download the Javascript file from the build folder and include it in your page.
+
+`<script src="../biuld/PPAmount.js"></script>`
+
+2. Create an input field.
+
+`<input id="amount" />`
+
+3. Instantiate PPAmount and pass options.
 
 ```
-npm install
+    window.PPAmount({
+      // Any ID
+      id: 'amount',
+      
+      // This will be passed to document.querySelector
+      selector: '#amount',
+
+      // These options will be passed to the inputmask component used internally
+      // which is https://github.com/RobinHerbots/Inputmask
+      // The default options passed are:
+      // {
+      //   'alias': 'decimal',
+      //   'groupSeparator': ',',
+      //   'autoGroup': true,
+      //   'digits': 2,
+      //   'digitsOptional': false,
+      //   'placeholder': '0.00'
+      // };
+      inputMaskOptions: { // 
+        ...
+      },
+
+      // Valid style options.
+      // These will be set as "style" on the input component
+      inputStyleOptions: {
+        'font-size': '2rem'
+      }
+    })
 ```
 
-### Start Dev Server
+
+4. User entered amount will be available as
+
+`window.PPAmount[ID].value`
+
+5. Pass it to PayPal as
 
 ```
-npm start
+    <script>
+      paypal.Buttons({
+        style: {
+          size: 'responsive'
+        },
+        createOrder: function(data, actions) {
+          // This function sets up the details of the transaction, including the amount and line item details.
+          return actions.order.create({
+            purchase_units: [{
+              amount: {
+                value: window.PPAmount['input-amount'].value. // <-- Here
+              }
+            }]
+          });
+        }
+      }).render('#paypal-button-container');
+    </script>
 ```
 
-### Build Prod Version
 
-```
-npm run build
-```
 
-### Features:
 
-- ES6 Support via [babel](https://babeljs.io/) (v7)
-- JavaScript Linting via [eslint-loader](https://github.com/MoOx/eslint-loader)
-- SASS Support via [sass-loader](https://github.com/jtangelder/sass-loader)
-- Autoprefixing of browserspecific CSS rules via [postcss](https://postcss.org/) and [autoprefixer](https://github.com/postcss/autoprefixer)
-- Style Linting via [stylelint](https://stylelint.io/)
 
-When you run `npm run build` we use the [mini-css-extract-plugin](https://github.com/webpack-contrib/mini-css-extract-plugin) to move the css to a separate file. The css file gets included in the head of the `index.html`.
+
+
+
+
+

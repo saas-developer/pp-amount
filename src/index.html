@@ -3,10 +3,55 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>webpack starterkit</title>
+  <title>Amount</title>
+  <script src="https://www.paypal.com/sdk/js?client-id=sb"></script>
+  <script src="../build/PPAmount.js"></script>
 </head>
 <body>
-  <h1>webpack starter</h1>
-  <p>✨ A lightweight foundation for your next webpack based frontend project.</p>
+
+  <div id="container" style="padding: 20px; background: khaki; display: flex; flex-direction: column;
+    align-items: center;">
+    <input
+      id="input-amount"
+      value="1.02"
+    />
+    <div
+      id="paypal-button-container"
+    ></div>
+  </div>
+
+  <script>
+    paypal.Buttons({
+      style: {
+        size: 'responsive'
+      },
+      createOrder: function(data, actions) {
+        // This function sets up the details of the transaction, including the amount and line item details.
+        return actions.order.create({
+          purchase_units: [{
+            amount: {
+              value: window.PPAmount['input-amount'].value
+            }
+          }]
+        });
+      }
+    }).render('#paypal-button-container');
+  </script>
+  <script>
+    setTimeout(() => {
+      new window.PPAmount({
+        id: 'input-amount',
+        selector: '#input-amount',
+        onChange: function(event) {
+          console.log('event.target.value ', event.target.value);
+        },
+        inputStyleOptions: {
+          'font-size': '2rem'
+        }
+      });
+    }, 1000)
+  </script>
+
+
 </body>
 </html>

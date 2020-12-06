@@ -9,14 +9,14 @@ module.exports = {
   },
   output: {
     path: Path.join(__dirname, '../build'),
-    filename: 'js/[name].js',
+    filename: 'bundle.js'
   },
-  optimization: {
-    splitChunks: {
-      chunks: 'all',
-      name: false,
-    },
-  },
+  // optimization: {
+  //   splitChunks: {
+  //     chunks: 'all',
+  //     name: false,
+  //   },
+  // },
   plugins: [
     new CleanWebpackPlugin(),
     new CopyWebpackPlugin({ patterns: [{ from: Path.resolve(__dirname, '../public'), to: 'public' }] }),
