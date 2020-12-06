@@ -8,6 +8,14 @@ If you want to display a very simple amount component so that user can enter the
 
 This is a simple Custom Amount component for PayPal Smart Buttons.
 
+## Example Amount
+
+![Amount Component](/screenshots/Amount.png?raw=true "Amount Component")
+
+## Amount in Checkout
+
+![Amount in Checkout](/screenshots/PayPalCheckout.png?raw=true "Amount in Checkout")
+
 ### Usage
 
 1. Download the Javascript file from the build folder and include it in your page.
@@ -18,7 +26,7 @@ This is a simple Custom Amount component for PayPal Smart Buttons.
 
 `<input id="amount" />`
 
-3. Instantiate PPAmount and pass options.
+3. Instantiate PPAmount and pass options. See example in `src/index.html`
 
 ```
     window.PPAmount({
